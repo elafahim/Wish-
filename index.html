@@ -75,7 +75,7 @@ h1{font-size:1.72rem;font-weight:700;margin-bottom:22px;line-height:1.35}
 </div>
 
 <div class="card hidden" id="page3">
-  <div class="msg-box"> umm i lpve you toooo 😘🤭🤭..! hlww amr baccha....it's so sad to see u suffer..tmi amne o sob time e osusto thako...aktu Jodi nijer kheyal na rakho thaole hoiii ? 🤭 Akn to Ami nei...Ami thakle Ami e rakhbo tension not..kintu akn to tmr e rakhte hobeee... understand? Besi besi mum khao fruits khao good girl Hoye thako in sha allah susto Hoye Jabe...🤭 ! And Dekho I've make this for u..!</div>
+  <div class="msg-box"> umm i love you toooo amr jaan 😘🤭🤭..! hlww amr baccha....it's so sad to see u suffer..tmi amne o sob time e osusto thako...aktu Jodi nijer kheyal na rakho thaole hoiii ? 🤭 Akn to Ami nei...Ami thakle Ami e rakhbo tension not..kintu akn to tmr e rakhte hobeee... understand? Besi besi mum khao fruits khao good girl Hoye thako in sha allah susto Hoye Jabe...🤭 ! And Dekho I've make this for u..!</div>
   <button type="button" class="btn" onclick="go(4)">Next 🤍</button>
 </div>
 <div class="card hidden" id="page4">
@@ -276,5 +276,81 @@ var oldNextStep=nextStep;
 nextStep=function(){
   oldNextStep();
   triggerPet();
+};
+</script>
+<style>
+@keyframes realPetHand {
+  0% { transform: translate(0px, 0px) rotate(0deg); }
+  25% { transform: translate(-8px, -10px) rotate(-12deg); }
+  50% { transform: translate(6px, 4px) rotate(8deg); }
+  75% { transform: translate(-6px, -8px) rotate(-10deg); }
+  100% { transform: translate(0px, 0px) rotate(0deg); }
+}
+@keyframes girlHeadNod {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  30% { transform: translateY(3px) rotate(3deg); }
+  70% { transform: translateY(2px) rotate(-2deg); }
+}
+.real-petting {
+  opacity: 1 !important;
+  animation: realPetHand 0.9s ease-in-out 2 !important;
+}
+.girl-nodding {
+  animation: girlHeadNod 0.9s ease-in-out 2;
+}
+</style>
+
+<script>
+function playRealPet() {
+  var ph = document.getElementById('pat-hand');
+  var gb = document.getElementById('girl-bob-inner');
+  var stage = document.querySelector('.hug-stage');
+  if (!ph) return;
+
+  ph.classList.remove('real-petting');
+  if (gb) gb.classList.remove('girl-nodding');
+  void ph.offsetWidth;
+  ph.classList.add('real-petting');
+  if (gb) gb.classList.add('girl-nodding');
+
+  // Spawn cute mini hearts right above her head while petting
+  if (stage) {
+    for (var i = 0; i < 4; i++) {
+      (function(idx) {
+        setTimeout(function() {
+          var mini = document.createElement('div');
+          mini.innerText = idx % 2 === 0 ? '🤍' : '✨';
+          mini.style.position = 'absolute';
+          mini.style.left = (48 + Math.random() * 16) + '%';
+          mini.style.top = '28%';
+          mini.style.fontSize = '18px';
+          mini.style.pointerEvents = 'none';
+          mini.style.transition = 'all 1s ease-out';
+          mini.style.opacity = '1';
+          stage.appendChild(mini);
+          setTimeout(function() {
+            mini.style.transform = 'translateY(-35px) scale(1.3)';
+            mini.style.opacity = '0';
+          }, 30);
+          setTimeout(function() { mini.remove(); }, 1050);
+        }, idx * 250);
+      })(i);
+    }
+  }
+}
+
+var baseStartP5 = startP5;
+startP5 = function() {
+  baseStartP5();
+  document.getElementById('patMsgBox').innerText = "akn kmn achen pakhi...?";
+  setTimeout(playRealPet, 1500);
+};
+
+var baseNextStep = nextStep;
+nextStep = function() {
+  baseNextStep();
+  if (document.getElementById('page5') && !document.getElementById('page5').classList.contains('hidden')) {
+    playRealPet();
+  }
 };
 </script>
