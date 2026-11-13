@@ -257,3 +257,24 @@ function spawn(){
 </script>
 </body>
 </html>
+<script>
+function triggerPet(){
+  var ph=document.getElementById('pat-hand');
+  if(!ph)return;
+  ph.classList.add('visible');
+  ph.classList.remove('patting-now');
+  void ph.offsetWidth;
+  ph.classList.add('patting-now');
+}
+var oldStartP5=startP5;
+startP5=function(){
+  oldStartP5();
+  document.getElementById('patMsgBox').innerText="akn kmn achen pakhi...?";
+  setTimeout(triggerPet,1400);
+};
+var oldNextStep=nextStep;
+nextStep=function(){
+  oldNextStep();
+  triggerPet();
+};
+</script>
